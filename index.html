@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhay's Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+    <div id="header">
+        <div class="container">
+            <nav>
+                <h1 class="logo">Abhay's Portfolio</h1>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Projects</a></li>
+                    <li><a href="#portfolio">Certifications and Achievements</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-text">
+                <p>Software Developer</p>
+                <h1>I am <span>Abhay Bhatia</span><br> from India</h1>
+            </div>
+        </div>
+    </div>
+<!-- --------------aBOUT------------- -->
+    <div id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 class="subtitle">ABOUT ME</h1><br><br>
+                    <p class="pa">As an enthusiastic and dedicated candidate currently in my 8th semester pursuing a degree in
+                        Electronics and Computer Engineering, I am eager to launch my career in software engineering. With
+                        a solid foundation in programming language Java and a strong grasp of algorithms and data
+                        structures, I am excited to contribute my skills and fresh perspective to a forward-thinking company. I
+                        am eager to join a team of experienced professionals, actively engage in building innovative software
+                        products, and continue learning in a dynamic environment. I am confident that my passion for software
+                        engineering and my academic background make me a valuable asset to any team looking for a
+                        motivated and skilled individual.</p>
+                    <div class="tab-titles">
+                        <br>
+                        <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
+                        <p class="tab-links"  onclick="opentab('projects')">Education</p>
+                        <!-- <p class="tab-links "  onclick="opentab('certifications')">Certificates</p> -->
+                    </div>
+                    <div class="tab-contents active-tab" id="skills">
+                        <ul>
+                        <li><span>Programming Languages</span><br> Python,Java</li>
+                        <li><span>Web Technologies</span><br> HTML, CSS,JavaScript</li>
+                        <li><span>Database Management</span><br> MySQL, SQL</li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-contents projects" id="projects">
+                        <ul>
+                        <li><span>J.C Bose University of Science & Technology,
+                            YMCA, Faridabad</span><br>Bachelor of Technology (B.Tech.) -
+                            Electronics & Computer Engineering
+                            2020 – 2024 | 8th semester <br>
+                            Cumulative Grade Point Average
+                            (CGPA): 7.64 / 10.00</li>
+                        <li><span>St. Joseph's Convent School,Faridabad
+                            </span><br>12th Grade | CBSE 2020 | Specialization: Science <br> Percentage: 85.00 / 100.00</li>
+                        <li><span>St. Joseph's Convent School,Faridabad
+                            </span><br>10th Grade | CBSE 2018 <br>
+                            Percentage: 77.50 / 100.00</li>
+                        </ul>
+                    </div>
+
+                    <!-- <div class="tab-contents certifications" id="certifications">
+                        <ul>
+                        <li><span>Programming in java </span><br>Designing web interfaces</li>
+                        <li><span>Web Development</span><br>web app development</li>
+                        <li><span>app development</span><br>android app development</li>
+                        </ul>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+<br><br><br><br><br><br><br>
+
+<!-- ----------------------------portfolio------------------- -->
+
+<div id="portfolio">
+    <div class="container">
+        <h1 class="subtitle">Projects</h1>
+        <div class="work-list">
+            <div class="work">
+                <img src="images/download.jpg" alt="">
+                <div class="layer">
+                    <h3>AUDIO STEGANOGRAPHY</h3>
+                    <p>Developed in PyCharm, this Python application uses Streamlit for the frontend and Wave, OS libraries for audio manipulation. It covertly embeds confidential data in audio files through LSB manipulation, ensuring a secure channel. The user-friendly Streamlit interface prioritizes interactivity, while security measures resist common audio processing attacks, maintaining information confidentiality.</p>
+                    <a href="#">Learn more</a>
+                </div>
+            </div>
+            <div class="work">
+                <img src="images/download (1).jpg" alt="">
+                <div class="layer">
+                    <h3>Employee Management System</h3>
+                    <p>Designed in Eclipse, this Java-based Employment Management System utilizes MySQL for backend data storage and Swing, AWT for the graphical interface. Following industry best practices, the CRUD application efficiently manages employment data, offering create, read, update, and delete functionalities. The project demonstrates expertise in Java application development and database integration.</p>
+                    <a href="#">Learn more</a>
+                </div>
+            </div>
+            <div class="work">
+                <img src="/images/download (2).jpg" alt="">
+                <div class="layer">
+                    <h3>Portfolio Website</h3>
+                    <p>Abhay's Portfolio, a dynamic website created using HTML, CSS, and JavaScript, showcases a Software Developer's skills and achievements. It features projects like Audio Steganography and an Employee Management System. The site includes an about me section, project portfolio and a contact form.</p>
+                    <a href="#">Learn more</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br><br><br><br><br><br><br>
+
+<!-- --------------------------------services-------------------------- -->
+
+<div id="services">
+    <div class="container">
+        <h1 class="subtitle">My Certificates</h1>
+        <div class="services-list">
+            <div>
+                <h2>Programming in Java</h2>
+                <p>Java programmer with strong problem-solving skills and a solid foundation in
+                    OOP. Achieved an impressive 70.00/100.00 aggregate in Java programming.
+                    Certified by NPTEL, demonstrating expertise in Java development. Adept at
+                    tackling complex challenges and committed to excellence in software
+                    development</p><br><br><br><br><br>
+                <br><a href="/images/Programming in Java.jpg" download>Download</a>
+            </div>
+            <div>
+                <h2>Data Analytics with Python</h2>
+                <p>Successfully completed the Data Analytics with Python certification program
+                    from NPTEL, demonstrating proficiency in utilizing Python for data analytics.
+                    Acquired skills include data manipulation, statistical analysis, and visualization
+                    techniques. The certification attests to a comprehensive understanding of
+                    Python's application in extracting meaningful insights from datasets,
+                    enhancing analytical capabilities, and contributing to informed decisionmaking in data-driven environments</p>
+                <br><a href="/images/Data Analytics with Python.jpg" download>Download</a>
+            </div>
+            <div>
+                <h2>Social Networks</h2>
+                <p>I hold a certification in "Social Networks" from NPTEL, showcasing my deep
+                    understanding of the intricacies of online interactions and network dynamics.
+                    This certification underscores my proficiency in theoretical concepts and
+                    practical applications related to social structures and information
+                    dissemination. Completing this course reflects my commitment to staying
+                    informed about contemporary technological trends, further enhancing my
+                    skills in navigating and understanding the complexities of social networks.</p>
+                <br><a href="/images/Social Networks (1).pdf" download>Download</a>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br>
+<!-- -------------------------contact--------------------------- -->
+<div id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="contact-left">
+                <h1 class="subtitle">Contact Me</h1>
+                <p><i class="fas fa-paper-plane"></i> abhaybhatia0898@gmail.com</p>
+                <p><i class="fas fa-phone-square-alt"></i> 9873057300</p>
+                <div class="social-icons">
+                    <a href=""><i class="fa-brands fa-facebook"></i></a>
+                    <a href=""><i class="fa-brands fa-linkedin"></i></a>
+                    <a href=""><i class="fa-brands fa-instagram"></i></a>
+                </div>
+                <br><br>
+                <a href="/images/ABHAY BHATIA1.pdf" download class="btn">Download CV</a>
+            </div>
+            <div class="contact-right">
+                <form name="submit-to-google-sheet">
+                    <input type="text" name="Name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your email" required>
+                    <textarea name="Message" rows="6" placeholder="Your Message"></textarea>
+                    <button type="submit" class="button">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br><br><br><br><br><br><br><br><br>
+    <script>
+        var tablinks = document.getElementsByClassName("tab-links");
+        var tabcontents = document.getElementsByClassName("tab-contents");
+        
+        function opentab(tabname){
+            for(tablink of tablinks){
+                tablink.classList.remove("active-link");
+            }
+            for(tabcontent of tabcontents){
+                tabcontent.classList.remove("active-tab");
+            }
+            event.currentTarget.classList.add("active-link");
+            document.getElementById(tabname).classList.add("active-tab");
+        }
+
+    </script>
+   
+      
+      <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzuvzcpWfPnCb9VZaKhNwpbQgOQ3m9iz6mHBps2F2WDUCx-b9dxH7Jb4FqHI2b9E2xvPQ/exec'
+        const form = document.forms['submit-to-google-sheet']
+      
+        form.addEventListener('submit', e => {
+          e.preventDefault()
+          fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => console.log('Success!', response))
+            .catch(error => console.error('Error!', error.message))
+        })
+      </script>
+</body>
+</html>
