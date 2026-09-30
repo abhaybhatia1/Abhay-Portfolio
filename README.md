@@ -1,18 +1,27 @@
 # Abhay Bhatia Portfolio
 
-A dependency-free, responsive personal portfolio built with semantic HTML, modern CSS, and vanilla JavaScript.
+A React/Vite portfolio for a Java full-stack developer. It uses an accessible liquid-glass visual system, responsive layout, light/dark themes, and reduced-motion support.
 
-## Run locally
+## Architecture
 
-Open `index.html` in a browser, or use any static server. No install or build step is required.
+- **Vite + React:** optimized static builds and a fast local development experience.
+- **Data-driven UI:** projects, skills, timeline, and copy live in `src/App.jsx`.
+- **Design tokens:** theme colors and responsive styles are centralized in `src/styles.css`.
+- **Deployment:** the GitHub Actions workflow builds and deploys the app to GitHub Pages.
+
+## Develop
+
+```bash
+npm install
+npm run dev
+npm run build
+npm run preview
+```
 
 ## Customize
 
-- **Content:** edit the sections in `index.html` (hero, projects, journey, skills, and contact).
-- **Projects:** duplicate a `.project-card` and update its description, tags, GitHub URL, and optional live-demo URL.
-- **Colors:** update `--accent` and `--accent2` in `Style.css`. The light/dark tokens live at the beginning of that file.
-- **Motion:** interaction code is isolated in `script.js`; it automatically respects `prefers-reduced-motion`.
+Edit `src/App.jsx` to update résumé content, projects, GitHub/live-demo links, and skills. Change `--a` and `--b` in `src/styles.css` to retheme the accents. The Vite `base` in `vite.config.js` must match this repository name for project-page deployment.
 
-## Accessibility
+## Deploy
 
-The site includes semantic landmarks, keyboard-visible focus styles, a skip link, accessible theme control, responsive layouts, and reduced-motion support.
+Merge this branch into `main`, then select **GitHub Actions** under **Settings → Pages**. Every push to `main` will publish the production build.
