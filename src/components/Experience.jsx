@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import data from '../data/portfolioData.json';
 
-const { experience } = data;
+const { experience, education } = data;
 
 export default function Experience() {
   const containerRef = useRef(null);
@@ -13,6 +13,11 @@ export default function Experience() {
 
   const lineScale = useTransform(scrollYProgress, [0.2, 0.8], [0, 1]);
 
+  const itemVariants = {
+    hidden: { opacity: 0, x: -50, scale: 0.95 },
+    show: { opacity: 1, x: 0, scale: 1, transition: { type: "spring", stiffness: 100, damping: 20 } }
+  };
+
   return (
     <section id="experience" className="py-32 px-6 md:px-12 max-w-7xl mx-auto" ref={containerRef}>
       <div className="mb-24">
@@ -22,7 +27,7 @@ export default function Experience() {
           viewport={{ once: true }}
           className="text-sm tracking-widest uppercase text-muted"
         >
-          02 / Experience
+          02 / Background
         </motion.h2>
         <motion.h3 
           initial={{ opacity: 0, y: 30 }}
@@ -36,33 +41,32 @@ export default function Experience() {
       </div>
 
       <div className="relative">
-        {/* Progress Line */}
         <div className="absolute left-0 top-0 w-[1px] h-full bg-neutral-800 ml-[11px] md:ml-[15px]" />
         <motion.div 
-          className="absolute left-0 top-0 w-[1px] bg-white ml-[11px] md:ml-[15px] origin-top"
+          className="absolute left-0 top-0 w-[1px] bg-gradient-to-b from-white to-neutral-500 ml-[11px] md:ml-[15px] origin-top"
           style={{ height: "100%", scaleY: lineScale }}
         />
 
         <div className="flex flex-col gap-16 md:gap-24">
-          {experience.map((exp, index) => (
+          {[...experience, ...education].map((exp, index) => (
             <motion.div 
               key={index}
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative pl-12 md:pl-24"
+              variants={itemVariants}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-50px" }}
+              whileHover={{ x: 10 }}
+              className="relative pl-12 md:pl-24 group cursor-default"
             >
-              {/* Dot */}
-              <div className="absolute left-0 top-2 w-6 h-6 rounded-full border border-neutral-700 bg-background flex items-center justify-center">
-                <div className="w-2 h-2 rounded-full bg-white" />
+              <div className="absolute left-0 top-2 w-6 h-6 rounded-full border border-neutral-700 bg-background flex items-center justify-center group-hover:border-white transition-colors duration-300">
+                <div className="w-2 h-2 rounded-full bg-neutral-700 group-hover:bg-white transition-colors duration-300" />
               </div>
 
               <div className="flex flex-col md:flex-row md:items-baseline gap-4 md:gap-12 mb-4">
                 <span className="text-sm md:text-base font-medium text-neutral-400 whitespace-nowrap">
                   {exp.date}
                 </span>
-                <h4 className="text-2xl md:text-4xl font-semibold tracking-tight">
+                <h4 className="text-2xl md:text-4xl font-semibold tracking-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-neutral-500 transition-all duration-300">
                   {exp.title}
                 </h4>
               </div>
