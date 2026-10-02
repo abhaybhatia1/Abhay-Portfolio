@@ -1,15 +1,55 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import CustomCursor from './components/CustomCursor';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import About from './components/About';
+import Skills from './components/Skills';
+import Experience from './components/Experience';
+import Projects from './components/Projects';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
 
-const projects = [
-  {name:'Employee Management System', stack:'Java · Spring Boot · React · MySQL', description:'A full-stack CRUD application for secure, reliable employee-record management.', url:'https://github.com/abhaybhatia1/Employee-Management-System'},
-  {name:'Blog Management API', stack:'Java · Spring Boot · Spring Security · MySQL', description:'A modular REST API for creating, categorizing, and managing dynamic blog data.', url:'https://github.com/abhaybhatia1/todo_SpringBoot_MySQL'},
-  {name:'Banking Spring Boot', stack:'Java · Spring Boot', description:'Backend-focused Java application work built around clear service boundaries.', url:'https://github.com/abhaybhatia1/Banking_SpringBoot'}
-];
-const skills = {Core:'Java · SQL · JavaScript · TypeScript · OOP · DSA', Backend:'Spring Boot · REST APIs · Spring Security · Hibernate / JPA · Microservices', Frontend:'React.js · Angular · HTML · CSS', Data:'MySQL · PostgreSQL · Power BI · DevExpress Reports'};
-export default function App(){
-  const [theme,setTheme]=useState(()=>localStorage.getItem('theme')||'dark');
-  useEffect(()=>{document.documentElement.dataset.theme=theme;localStorage.setItem('theme',theme)},[theme]);
-  useEffect(()=>{const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('show')}),{threshold:.12});document.querySelectorAll('.reveal').forEach(node=>observer.observe(node));return()=>observer.disconnect()},[]);
-  return <><div className="orbs" aria-hidden="true"><i/><i/><i/><i/></div><header><a className="brand" href="#top">AB<span>.</span></a><nav><a href="#about">About</a><a href="#work">Work</a><a href="#journey">Journey</a><a href="#contact">Contact</a></nav><button className="theme" onClick={()=>setTheme(theme==='dark'?'light':'dark')} aria-label="Toggle color theme">{theme==='dark'?'☼':'◐'}</button></header><main id="top"><section className="hero wrap"><div className="reveal"><p className="eyebrow">Software developer · Gurgaon, India</p><h1>Scalable software, <em>made clear.</em></h1><p className="lead">I’m Abhay Bhatia, a Java full-stack developer with 1+ year of experience building reliable enterprise applications with Spring Boot, Angular, React, and SQL.</p><div className="actions"><a className="button primary" href="#work">View my work ↗</a><a className="button" href="#contact">Contact me</a></div></div><div className="orb-art reveal" aria-hidden="true"><b>JAVA</b><small>SPRING · REACT · SQL</small></div></section><section className="wrap split" id="about"><div className="reveal"><p className="eyebrow">01 / About</p><h2>Engineering with sound design principles.</h2></div><div className="reveal"><p>I apply modern software engineering principles to research, design, develop, and maintain scalable applications. I enjoy untangling complex problems, collaborating with stakeholders, and shipping dependable results.</p><div className="chips">{['Java','Spring Boot','React.js','Angular','MySQL','PostgreSQL','Microservices','Clean Architecture'].map(x=><span key={x}>{x}</span>)}</div></div></section><section className="wrap" id="work"><div className="heading reveal"><div><p className="eyebrow">02 / Selected work</p><h2>Product-minded technical work.</h2></div><a href="https://github.com/abhaybhatia1" target="_blank" rel="noreferrer">GitHub ↗</a></div><div className="cards">{projects.map((project,index)=><article className="card reveal" key={project.name}><div className={'visual v'+index}><span>0{index+1}</span><strong>{index===0?'People':index===1?'Words':'Ledger'}</strong></div><div className="card-body"><p className="eyebrow">{project.stack}</p><h3>{project.name}</h3><p>{project.description}</p><a href={project.url} target="_blank" rel="noreferrer">View repository ↗</a></div></article>)}</div></section><section className="wrap" id="journey"><p className="eyebrow reveal">03 / Experience</p><div className="timeline"><Timeline date="Jun 2025 — Present" title="Software Developer · Damco Solutions, Gurgaon" text="Modernizing an enterprise web application from MVC to Angular; developing REST APIs and CRUD workflows with Java, Spring Boot, and MySQL."/><Timeline date="Dec 2024 — Jun 2025" title="Associate Analyst · GlobalLogic, Gurgaon" text="Cleaned large datasets, built Power BI dashboards, and partnered with engineering teams to deliver accurate data insights."/><Timeline date="Feb 2024 — Jul 2024" title="Engineering Intern · FarEye Logistics, Noida" text="Developed scalable order-validation APIs with Spring Boot and MySQL, including Spring Security authentication."/><Timeline date="2020 — 2024" title="B.Tech, Electronics & Computer Engineering" text="J.C. Bose University of Science & Technology, YMCA, Faridabad · CGPA 7.54 / 10."/></div></section><section className="wrap skill-area"><div className="reveal"><p className="eyebrow">04 / Capabilities</p><h2>A balanced full-stack toolbox.</h2></div><div className="skill-grid reveal">{Object.entries(skills).map(([name,list])=><div key={name}><h3>{name}</h3><p>{list}</p></div>)}</div></section><section className="wrap" id="contact"><div className="contact reveal"><p className="eyebrow">05 / Contact</p><h2>Let’s build something dependable.</h2><p>Open to software engineering opportunities and technical collaboration.</p><div className="actions"><a className="button primary" href="mailto:abhaybhatia0898@gmail.com">Email me ↗</a><a className="button" href="https://github.com/abhaybhatia1" target="_blank" rel="noreferrer">GitHub</a></div></div></section></main><footer className="wrap">© {new Date().getFullYear()} Abhay Bhatia <span>Built with React</span></footer></>
+export default function App() {
+  // Smooth scroll behavior for internal links
+  useEffect(() => {
+    const handleLinkClick = (e) => {
+      const href = e.currentTarget.getAttribute('href');
+      if (href?.startsWith('#')) {
+        e.preventDefault();
+        const element = document.querySelector(href);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    };
+
+    const links = document.querySelectorAll('a[href^="#"]');
+    links.forEach(link => {
+      link.addEventListener('click', handleLinkClick);
+    });
+
+    return () => {
+      links.forEach(link => {
+        link.removeEventListener('click', handleLinkClick);
+      });
+    };
+  }, []);
+
+  return (
+    <div className="bg-background text-foreground min-h-screen font-sans selection:bg-white selection:text-black">
+      <CustomCursor />
+      <Navbar />
+      
+      <main>
+        <Hero />
+        <About />
+        <Skills />
+        <Experience />
+        <Projects />
+        <Contact />
+      </main>
+
+      <Footer />
+    </div>
+  );
 }
-function Timeline({date,title,text}){return <article className="item reveal"><p>{date}</p><div><h3>{title}</h3><p>{text}</p></div></article>}
