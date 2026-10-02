@@ -21,6 +21,18 @@
   },
   "experience": [
     {
+      "date": "Jun 2025 – Present",
+      "title": "Software Developer",
+      "company": "Damco Solutions, Gurgaon",
+      "text": "Modernizing an enterprise web application from MVC to Angular; developing REST APIs and CRUD workflows with Java, Spring Boot, and MySQL."
+    },
+    {
+      "date": "Dec 2024 – Jun 2025",
+      "title": "Associate Analyst",
+      "company": "GlobalLogic, Gurgaon",
+      "text": "Cleaned large datasets, built Power BI dashboards, and partnered with engineering teams to deliver accurate data insights."
+    },
+    {
       "date": "Feb 2024 – July 2024",
       "title": "Engineering Intern",
       "company": "FarEye Logistics, Noida",
