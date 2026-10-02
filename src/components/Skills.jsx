@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { skills } from '../data/portfolioData';
+import data from '../data/portfolioData.json';
+
+const { skills } = data;
 
 export default function Skills() {
   const allSkills = Object.values(skills).flat();

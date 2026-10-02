@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { experience } from '../data/portfolioData';
+import data from '../data/portfolioData.json';
+
+const { experience } = data;
 
 export default function Experience() {
   const containerRef = useRef(null);

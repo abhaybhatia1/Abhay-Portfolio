@@ -1,7 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { projects } from '../data/portfolioData';
+import data from '../data/portfolioData.json';
 import { ArrowUpRight } from 'lucide-react';
+
+const { projects } = data;
 
 export default function Projects() {
   return (
