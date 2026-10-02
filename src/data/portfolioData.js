@@ -1,0 +1,54 @@
+export const projects = [
+  {
+    name: 'Employee Management System',
+    stack: ['Java', 'Spring Boot', 'React', 'MySQL'],
+    description: 'A full-stack CRUD application for secure, reliable employee-record management.',
+    url: 'https://github.com/abhaybhatia1/Employee-Management-System'
+  },
+  {
+    name: 'Blog Management API',
+    stack: ['Java', 'Spring Boot', 'Spring Security', 'MySQL'],
+    description: 'A modular REST API for creating, categorizing, and managing dynamic blog data.',
+    url: 'https://github.com/abhaybhatia1/todo_SpringBoot_MySQL'
+  },
+  {
+    name: 'Banking Spring Boot',
+    stack: ['Java', 'Spring Boot'],
+    description: 'Backend-focused Java application work built around clear service boundaries.',
+    url: 'https://github.com/abhaybhatia1/Banking_SpringBoot'
+  }
+];
+
+export const skills = {
+  Core: ['Java', 'SQL', 'JavaScript', 'TypeScript', 'OOP', 'DSA'],
+  Backend: ['Spring Boot', 'REST APIs', 'Spring Security', 'Hibernate / JPA', 'Microservices'],
+  Frontend: ['React.js', 'Angular', 'HTML', 'CSS'],
+  Data: ['MySQL', 'PostgreSQL', 'Power BI', 'DevExpress Reports']
+};
+
+export const experience = [
+  {
+    date: 'Jun 2025 – Present',
+    title: 'Software Developer',
+    company: 'Damco Solutions, Gurgaon',
+    text: 'Modernizing an enterprise web application from MVC to Angular; developing REST APIs and CRUD workflows with Java, Spring Boot, and MySQL.'
+  },
+  {
+    date: 'Dec 2024 – Jun 2025',
+    title: 'Associate Analyst',
+    company: 'GlobalLogic, Gurgaon',
+    text: 'Cleaned large datasets, built Power BI dashboards, and partnered with engineering teams to deliver accurate data insights.'
+  },
+  {
+    date: 'Feb 2024 – Jul 2024',
+    title: 'Engineering Intern',
+    company: 'FarEye Logistics, Noida',
+    text: 'Developed scalable order-validation APIs with Spring Boot and MySQL, including Spring Security authentication.'
+  },
+  {
+    date: '2020 – 2024',
+    title: 'B.Tech, Electronics & Computer Engineering',
+    company: 'J.C. Bose University of Science & Technology, YMCA, Faridabad',
+    text: 'CGPA 7.54 / 10.'
+  }
+];
