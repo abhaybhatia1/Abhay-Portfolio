@@ -40,37 +40,48 @@ export default function Projects() {
               className="group relative flex flex-col md:flex-row gap-12 md:gap-24 items-center"
             >
               {/* Abstract Visual Placeholder since we don't have images */}
-              <div className="w-full md:w-1/2 aspect-video bg-neutral-900 rounded-lg overflow-hidden relative group-hover:scale-[1.02] transition-transform duration-700 ease-out">
-                <div className="absolute inset-0 bg-gradient-to-br from-neutral-800 to-black opacity-50" />
-                <div className="absolute inset-0 flex items-center justify-center text-neutral-800 font-bold text-[12rem] opacity-20 select-none">
+              <div className="w-full md:w-1/2 aspect-video bg-neutral-900 rounded-lg overflow-hidden relative transition-all duration-700 ease-out transform perspective-1000 group-hover:rotate-y-2 group-hover:rotate-x-2 group-hover:shadow-2xl group-hover:shadow-white/5">
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-br from-neutral-800 to-black opacity-50"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.5 }}
+                />
+                <div className="absolute inset-0 flex items-center justify-center text-neutral-800 font-bold text-[12rem] opacity-20 select-none group-hover:scale-110 transition-transform duration-700">
                   0{index + 1}
                 </div>
                 {/* Decorative elements */}
-                <div className="absolute top-8 left-8 w-16 h-[1px] bg-neutral-700" />
-                <div className="absolute bottom-8 right-8 w-1 h-16 bg-neutral-700" />
+                <div className="absolute top-8 left-8 w-16 h-[1px] bg-neutral-700 group-hover:w-24 group-hover:bg-white transition-all duration-500" />
+                <div className="absolute bottom-8 right-8 w-1 h-16 bg-neutral-700 group-hover:h-24 group-hover:bg-white transition-all duration-500" />
               </div>
 
               <div className="w-full md:w-1/2 flex flex-col items-start">
                 <p className="text-xs tracking-widest uppercase text-neutral-500 mb-6 flex flex-wrap gap-2">
                   {project.stack.map((tech, i) => (
-                    <span key={i} className="bg-neutral-900 px-3 py-1 rounded-full">{tech}</span>
+                    <motion.span 
+                      whileHover={{ scale: 1.1, backgroundColor: '#fff', color: '#000' }}
+                      key={i} 
+                      className="bg-neutral-900 px-3 py-1 rounded-full cursor-default transition-colors duration-300"
+                    >
+                      {tech}
+                    </motion.span>
                   ))}
                 </p>
                 <h4 className="text-4xl md:text-5xl font-bold mb-6 group-hover:text-neutral-300 transition-colors">
                   {project.name}
                 </h4>
-                <p className="text-lg text-neutral-400 mb-10 leading-relaxed">
+                <p className="text-lg text-neutral-400 mb-10 leading-relaxed group-hover:text-neutral-300 transition-colors duration-500">
                   {project.description}
                 </p>
                 
-                <a 
+                <motion.a 
+                  whileHover={{ x: 10 }}
                   href={project.url} 
                   target="_blank" 
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 text-sm uppercase tracking-widest hover:text-neutral-400 transition-colors pb-1 border-b border-white hover:border-neutral-400"
+                  className="inline-flex items-center gap-2 text-sm uppercase tracking-widest hover:text-white text-neutral-400 transition-colors pb-1 border-b border-white/20 hover:border-white"
                 >
                   View Repository <ArrowUpRight size={16} />
-                </a>
+                </motion.a>
               </div>
             </motion.div>
           ))}
