@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { motion, useSpring } from 'framer-motion';
 import data from '../data/portfolioData.json';
-import { ArrowUpRight, ExternalLink, ChevronRight } from 'lucide-react';
+import { ArrowUpRight, ChevronRight } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
+import { sounds } from '../utils/audio';
 
 const GithubIcon = ({ size = 16 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -12,12 +14,27 @@ const GithubIcon = ({ size = 16 }) => (
 const { projects } = data;
 
 const accents = [
-  { glow: 'rgba(99,102,241,0.22)', border: 'rgba(99,102,241,0.5)', tag: 'bg-indigo-500/10 text-indigo-300 border-indigo-500/30' },
-  { glow: 'rgba(56,189,248,0.20)', border: 'rgba(56,189,248,0.5)', tag: 'bg-sky-500/10 text-sky-300 border-sky-500/30' },
-  { glow: 'rgba(16,185,129,0.18)', border: 'rgba(16,185,129,0.5)', tag: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30' },
+  {
+    glow: 'rgba(168,85,247,0.22)',
+    border: 'rgba(168,85,247,0.5)',
+    tagLight: 'bg-purple-100/90 text-purple-800 border-purple-300',
+    tagDark: 'bg-purple-500/10 text-purple-300 border-purple-500/30'
+  },
+  {
+    glow: 'rgba(56,189,248,0.20)',
+    border: 'rgba(56,189,248,0.5)',
+    tagLight: 'bg-sky-100/90 text-sky-800 border-sky-300',
+    tagDark: 'bg-sky-500/10 text-sky-300 border-sky-500/30'
+  },
+  {
+    glow: 'rgba(16,185,129,0.18)',
+    border: 'rgba(16,185,129,0.5)',
+    tagLight: 'bg-emerald-100/90 text-emerald-800 border-emerald-300',
+    tagDark: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30'
+  },
 ];
 
-function TiltCard({ children, className, accentGlow, accentBorder, onClick }) {
+function TiltCard({ children, className, accentGlow, accentBorder, onClick, isLight }) {
   const ref = useRef(null);
   const [glowPos, setGlowPos] = useState({ x: 50, y: 50 });
   const [hovered, setHovered] = useState(false);
@@ -31,8 +48,8 @@ function TiltCard({ children, className, accentGlow, accentBorder, onClick }) {
     const rect = ref.current.getBoundingClientRect();
     const nx = (e.clientX - rect.left) / rect.width;
     const ny = (e.clientY - rect.top) / rect.height;
-    rotateX.set(-(ny - 0.5) * 8);
-    rotateY.set((nx - 0.5) * 8);
+    rotateX.set(-(ny - 0.5) * 7);
+    rotateY.set((nx - 0.5) * 7);
     setGlowPos({ x: nx * 100, y: ny * 100 });
   };
 
@@ -42,19 +59,24 @@ function TiltCard({ children, className, accentGlow, accentBorder, onClick }) {
     setHovered(false);
   };
 
+  const handleMouseEnter = () => {
+    sounds.playHover();
+    setHovered(true);
+  };
+
   return (
     <motion.div
       ref={ref}
       onClick={onClick}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setHovered(true)}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
         rotateX,
         rotateY,
         transformPerspective: 1200,
-        boxShadow: hovered ? `0 0 60px ${accentGlow}` : 'none',
-        borderColor: hovered ? accentBorder : 'rgba(255,255,255,0.08)',
+        boxShadow: hovered ? `0 0 50px ${accentGlow}` : undefined,
+        borderColor: hovered ? accentBorder : isLight ? 'rgba(168,85,247,0.22)' : 'rgba(255,255,255,0.08)',
       }}
       className={className}
     >
@@ -72,15 +94,21 @@ function TiltCard({ children, className, accentGlow, accentBorder, onClick }) {
 }
 
 export default function Projects() {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
+
   const handleCardClick = (url) => {
+    sounds.playClick();
     if (url) {
       window.open(url, '_blank', 'noopener,noreferrer');
     }
   };
 
   return (
-    <section id="projects" className="py-32 px-6 md:px-12 border-t border-white/[0.06] relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[50vw] bg-indigo-500/[0.03] rounded-full blur-[140px] pointer-events-none" />
+    <section id="projects" className="py-32 px-6 md:px-12 border-t border-inherit relative overflow-hidden">
+      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[50vw] rounded-full blur-[140px] pointer-events-none ${
+        isLight ? 'bg-purple-300/15' : 'bg-purple-600/5'
+      }`} />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
@@ -91,9 +119,9 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="text-xs font-mono tracking-[0.25em] uppercase text-indigo-400 mb-4 flex items-center gap-2"
+              className="text-xs font-mono tracking-[0.25em] uppercase text-purple-600 dark:text-purple-400 mb-4 flex items-center gap-2 font-bold"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+              <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
               03 / Selected Work
             </motion.p>
 
@@ -102,10 +130,12 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.08 }}
-              className="text-4xl md:text-6xl font-bold tracking-tight leading-none text-white"
+              className={`text-4xl md:text-6xl font-bold tracking-tight leading-none ${
+                isLight ? 'text-[#140827]' : 'text-white'
+              }`}
             >
               Things I've<br />
-              <span className="bg-gradient-to-r from-neutral-400 to-indigo-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-purple-600 via-fuchsia-600 to-indigo-600 dark:from-neutral-300 dark:to-purple-300 bg-clip-text text-transparent">
                 actually built.
               </span>
             </motion.h2>
@@ -116,7 +146,9 @@ export default function Projects() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-neutral-400 text-sm max-w-xs leading-relaxed md:text-right"
+            className={`text-sm max-w-xs leading-relaxed md:text-right font-medium ${
+              isLight ? 'text-[#504070]' : 'text-neutral-400'
+            }`}
           >
             Click any project card to inspect the source code, architecture, and schema on GitHub.
           </motion.p>
@@ -138,8 +170,13 @@ export default function Projects() {
                 <TiltCard
                   accentGlow={accent.glow}
                   accentBorder={accent.border}
+                  isLight={isLight}
                   onClick={() => handleCardClick(project.url)}
-                  className="relative rounded-2xl border border-white/[0.08] bg-[#07080f]/80 backdrop-blur-xl overflow-hidden cursor-pointer group transition-all duration-300"
+                  className={`relative rounded-2xl border overflow-hidden cursor-pointer group transition-all duration-300 liquid-glass ${
+                    isLight
+                      ? 'bg-white/85 border-purple-200/90 shadow-xl shadow-purple-950/5 hover:shadow-2xl'
+                      : 'bg-[#0b0816]/80 border-white/[0.08] shadow-2xl'
+                  }`}
                 >
                   {/* Glowing Top Progress Line */}
                   <div
@@ -152,8 +189,8 @@ export default function Projects() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start gap-4 mb-4">
                         <span
-                          className="text-5xl md:text-6xl font-black leading-none select-none flex-shrink-0 transition-opacity"
-                          style={{ color: accent.border, opacity: 0.4 }}
+                          className="text-5xl md:text-6xl font-black leading-none select-none flex-shrink-0 transition-opacity font-mono"
+                          style={{ color: isLight ? '#9333ea' : accent.border, opacity: isLight ? 0.6 : 0.4 }}
                         >
                           {String(index + 1).padStart(2, '0')}
                         </span>
@@ -162,20 +199,37 @@ export default function Projects() {
                             href={project.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              sounds.playClick();
+                            }}
+                            onMouseEnter={() => sounds.playHover()}
                             className="inline-flex items-center gap-2 group/title"
                           >
-                            <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-white group-hover/title:text-indigo-300 transition-colors">
+                            <h3 className={`text-2xl md:text-3xl font-bold tracking-tight transition-colors ${
+                              isLight
+                                ? 'text-[#140827] group-hover/title:text-purple-700'
+                                : 'text-white group-hover/title:text-purple-300'
+                            }`}>
                               {project.name}
                             </h3>
-                            <ArrowUpRight size={18} className="text-neutral-500 group-hover/title:text-indigo-400 group-hover/title:translate-x-0.5 group-hover/title:-translate-y-0.5 transition-all" />
+                            <ArrowUpRight
+                              size={18}
+                              className={`transition-all ${
+                                isLight
+                                  ? 'text-purple-700 group-hover/title:translate-x-0.5 group-hover/title:-translate-y-0.5'
+                                  : 'text-neutral-400 group-hover/title:text-purple-300 group-hover/title:translate-x-0.5 group-hover/title:-translate-y-0.5'
+                              }`}
+                            />
                           </a>
 
                           <div className="flex flex-wrap gap-2 mt-2">
                             {project.stack.map((tech) => (
                               <span
                                 key={tech}
-                                className={`text-xs px-2.5 py-0.5 rounded-full border font-medium ${accent.tag}`}
+                                className={`text-xs px-3 py-1 rounded-full border font-semibold liquid-glass-pill ${
+                                  isLight ? accent.tagLight : accent.tagDark
+                                }`}
                               >
                                 {tech}
                               </span>
@@ -184,7 +238,9 @@ export default function Projects() {
                         </div>
                       </div>
 
-                      <p className="text-neutral-300 leading-relaxed text-base max-w-2xl font-normal mt-3">
+                      <p className={`leading-relaxed text-base max-w-2xl font-normal mt-3 ${
+                        isLight ? 'text-[#3c2f58]' : 'text-neutral-300'
+                      }`}>
                         {project.description}
                       </p>
                     </div>
@@ -196,9 +252,13 @@ export default function Projects() {
                           {project.impact.map((item) => (
                             <div
                               key={item}
-                              className="flex items-center gap-2 text-xs font-mono text-neutral-300 bg-white/[0.03] border border-white/[0.08] rounded-lg px-3 py-2"
+                              className={`flex items-center gap-2 text-xs font-mono font-semibold rounded-lg px-3.5 py-2 border liquid-glass-pill ${
+                                isLight
+                                  ? 'bg-purple-50/90 border-purple-200/90 text-purple-950 shadow-sm'
+                                  : 'bg-white/[0.04] border-white/[0.08] text-neutral-200'
+                              }`}
                             >
-                              <ChevronRight size={12} className="text-indigo-400 flex-shrink-0" />
+                              <ChevronRight size={13} className="text-purple-500 flex-shrink-0" />
                               {item}
                             </div>
                           ))}
@@ -210,25 +270,20 @@ export default function Projects() {
                           href={project.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-white bg-indigo-600/30 border border-indigo-500/50 hover:bg-indigo-600 hover:border-indigo-400 rounded-lg px-4 py-2.5 shadow-[0_0_15px_rgba(99,102,241,0.25)] transition-all duration-200"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            sounds.playClick();
+                          }}
+                          onMouseEnter={() => sounds.playHover()}
+                          className={`inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold rounded-xl px-4 py-2.5 shadow-md transition-all duration-200 ${
+                            isLight
+                              ? 'text-white bg-purple-600 hover:bg-purple-700 shadow-purple-500/20'
+                              : 'text-white bg-purple-600 hover:bg-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.3)]'
+                          }`}
                         >
                           <GithubIcon size={14} />
                           View on GitHub
                         </a>
-
-                        {project.liveUrl && (
-                          <a
-                            href={project.liveUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-black bg-white hover:bg-neutral-200 rounded-lg px-4 py-2.5 transition-colors duration-200"
-                          >
-                            <ExternalLink size={14} />
-                            Live Demo
-                          </a>
-                        )}
                       </div>
                     </div>
                   </div>
@@ -237,26 +292,6 @@ export default function Projects() {
             );
           })}
         </div>
-
-        {/* Bottom CTA to GitHub */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-16 flex justify-center"
-        >
-          <a
-            href="https://github.com/abhaybhatia1"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 text-sm font-mono text-neutral-400 hover:text-indigo-300 transition-colors duration-200 group"
-          >
-            <span className="w-8 h-[1px] bg-neutral-700 group-hover:bg-indigo-400 group-hover:w-12 transition-all duration-300" />
-            See all repositories on GitHub
-            <ArrowUpRight size={15} />
-          </a>
-        </motion.div>
       </div>
     </section>
   );

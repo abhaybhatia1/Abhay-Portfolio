@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, ArrowUpRight } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
+import { sounds } from '../utils/audio';
 
 const GithubIcon = ({ size = 16 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -22,14 +24,14 @@ const links = [
     icon: Mail,
   },
   {
-    label: 'GitHub',
+    label: 'GitHub Repository',
     sub: 'github.com/abhaybhatia1',
     href: 'https://github.com/abhaybhatia1',
     icon: GithubIcon,
     external: true,
   },
   {
-    label: 'LinkedIn',
+    label: 'LinkedIn Profile',
     sub: 'linkedin.com/in/abhay-bhatia-202935229',
     href: 'https://in.linkedin.com/in/abhay-bhatia-202935229',
     icon: LinkedinIcon,
@@ -38,10 +40,15 @@ const links = [
 ];
 
 export default function Contact() {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
+
   return (
-    <section id="contact" className="py-36 px-6 md:px-12 relative overflow-hidden border-t border-white/[0.06]">
+    <section id="contact" className="py-36 px-6 md:px-12 relative overflow-hidden border-t border-inherit">
       {/* Background glow orb */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-indigo-600/10 rounded-full blur-[160px] pointer-events-none" />
+      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] rounded-full blur-[160px] pointer-events-none ${
+        isLight ? 'bg-purple-200/40' : 'bg-purple-600/10'
+      }`} />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section label */}
@@ -50,9 +57,9 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-xs font-mono tracking-[0.25em] uppercase text-indigo-400 mb-12 flex items-center gap-2"
+          className="text-xs font-mono tracking-[0.25em] uppercase text-purple-600 dark:text-purple-400 mb-12 flex items-center gap-2 font-bold"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+          <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
           05 / Contact
         </motion.p>
 
@@ -64,7 +71,9 @@ export default function Contact() {
               whileInView={{ y: 0 }}
               viewport={{ once: true }}
               transition={{ type: 'spring', stiffness: 90, damping: 20 }}
-              className="text-6xl md:text-8xl lg:text-[8.5rem] font-black tracking-tight leading-none text-white"
+              className={`text-6xl md:text-8xl lg:text-[8.5rem] font-black tracking-tight leading-none ${
+                isLight ? 'text-[#140827]' : 'text-white'
+              }`}
             >
               LET'S
             </motion.h2>
@@ -75,7 +84,11 @@ export default function Contact() {
               whileInView={{ y: 0 }}
               viewport={{ once: true }}
               transition={{ type: 'spring', stiffness: 90, damping: 20, delay: 0.08 }}
-              className="text-6xl md:text-8xl lg:text-[8.5rem] font-black tracking-tight leading-none bg-gradient-to-r from-neutral-300 via-indigo-300 to-indigo-500 bg-clip-text text-transparent"
+              className={`text-6xl md:text-8xl lg:text-[8.5rem] font-black tracking-tight leading-none bg-clip-text text-transparent ${
+                isLight
+                  ? 'bg-gradient-to-r from-purple-700 via-fuchsia-600 to-indigo-600'
+                  : 'bg-gradient-to-r from-neutral-200 via-purple-300 to-indigo-400'
+              }`}
             >
               CONNECT.
             </motion.h2>
@@ -83,7 +96,9 @@ export default function Contact() {
         </div>
 
         {/* Contact links list */}
-        <div className="flex flex-col divide-y divide-white/[0.07]">
+        <div className={`flex flex-col divide-y ${
+          isLight ? 'divide-purple-200/80' : 'divide-white/[0.08]'
+        }`}>
           {links.map((link, i) => {
             const Icon = link.icon;
             return (
@@ -92,27 +107,49 @@ export default function Contact() {
                 href={link.href}
                 target={link.external ? '_blank' : undefined}
                 rel={link.external ? 'noopener noreferrer' : undefined}
+                onClick={() => sounds.playClick()}
+                onMouseEnter={() => sounds.playHover()}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 whileHover={{ x: 10 }}
-                className="group flex items-center justify-between py-8 text-neutral-300 hover:text-white transition-all duration-200"
+                className="group flex items-center justify-between py-8 transition-all duration-200 cursor-pointer"
               >
                 <div className="flex items-center gap-6">
-                  <div className="w-12 h-12 rounded-2xl border border-white/10 bg-white/[0.03] flex items-center justify-center group-hover:border-indigo-400 group-hover:bg-indigo-500/10 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.3)] transition-all duration-200">
-                    <Icon size={18} className="text-neutral-300 group-hover:text-indigo-300 transition-colors" />
+                  <div className={`w-14 h-14 rounded-2xl border flex items-center justify-center transition-all duration-300 liquid-glass ${
+                    isLight
+                      ? 'border-purple-300/80 bg-white/80 group-hover:border-purple-500 group-hover:bg-purple-100/80 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.25)]'
+                      : 'border-white/10 bg-white/[0.04] group-hover:border-purple-400 group-hover:bg-purple-500/15 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.3)]'
+                  }`}>
+                    <Icon size={20} className={`transition-colors ${
+                      isLight
+                        ? 'text-purple-800 group-hover:text-purple-950'
+                        : 'text-neutral-300 group-hover:text-purple-300'
+                    }`} />
                   </div>
                   <div>
-                    <p className="text-xl md:text-2xl font-bold text-white group-hover:text-indigo-200 transition-colors">
+                    <p className={`text-xl md:text-2xl font-bold transition-colors ${
+                      isLight
+                        ? 'text-[#140827] group-hover:text-purple-700'
+                        : 'text-white group-hover:text-purple-200'
+                    }`}>
                       {link.label}
                     </p>
-                    <p className="text-sm font-mono text-neutral-400 mt-0.5">{link.sub}</p>
+                    <p className={`text-sm font-mono mt-1 font-semibold ${
+                      isLight ? 'text-purple-900/70' : 'text-neutral-400'
+                    }`}>
+                      {link.sub}
+                    </p>
                   </div>
                 </div>
                 <ArrowUpRight
-                  size={22}
-                  className="text-neutral-500 group-hover:text-indigo-400 group-hover:-translate-y-1 group-hover:translate-x-1 transition-all duration-200"
+                  size={24}
+                  className={`transition-all duration-200 ${
+                    isLight
+                      ? 'text-purple-400 group-hover:text-purple-700 group-hover:-translate-y-1 group-hover:translate-x-1'
+                      : 'text-neutral-500 group-hover:text-purple-300 group-hover:-translate-y-1 group-hover:translate-x-1'
+                  }`}
                 />
               </motion.a>
             );
@@ -125,9 +162,13 @@ export default function Contact() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="mt-16 inline-flex items-center gap-2.5 text-xs text-neutral-300 border border-emerald-500/30 bg-emerald-500/5 rounded-full px-4 py-2 font-mono"
+          className={`mt-16 inline-flex items-center gap-2.5 text-xs rounded-full px-5 py-2.5 font-mono font-semibold border liquid-glass-pill ${
+            isLight
+              ? 'bg-purple-100/90 border-purple-300/90 text-purple-950 shadow-sm'
+              : 'border-emerald-500/30 bg-emerald-500/5 text-emerald-300'
+          }`}
         >
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_#10b981]" />
           Currently open to backend & full-stack software engineering roles
         </motion.div>
       </div>
