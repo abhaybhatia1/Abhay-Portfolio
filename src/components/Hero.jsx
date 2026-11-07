@@ -137,7 +137,7 @@ export default function Hero() {
         >
           Building high-performance backend architectures, distributed microservices, and secure RESTful APIs with{' '}
           <span className="text-white font-medium">Java & Spring Boot</span>. Currently modernizing enterprise systems at{' '}
-          <span className="text-indigo-300 font-medium underline underline-offset-4 decoration-indigo-500/40">Damco Solutions</span>, Gurgaon.
+          <span className="text-indigo-300 font-medium underline underline-offset-4 decoration-indigo-500/40">Damco Solutions</span>, Noida.
         </motion.p>
 
         {/* Tech Stack Chips with Spring Hover */}
