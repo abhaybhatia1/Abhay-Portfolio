@@ -1,32 +1,67 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-background: #040407;
-  --color-foreground: #f3f4f6;
-  --color-primary: #ffffff;
-  --color-muted: #94a3b8;
-  --color-accent: #0f1017;
   --font-sans: "Plus Jakarta Sans", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 }
 
+:root {
+  --bg-color: #06050b;
+  --text-color: #f3f4f8;
+  --text-heading: #ffffff;
+  --text-body: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --card-bg: rgba(13, 10, 24, 0.65);
+  --card-border: rgba(255, 255, 255, 0.09);
+  --liquid-highlight: rgba(255, 255, 255, 0.14);
+  --liquid-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.75), inset 0 1px 1px 0 rgba(255, 255, 255, 0.12);
+  --accent-purple: #a855f7;
+  --accent-glow: rgba(168, 85, 247, 0.25);
+}
+
+html.light {
+  /* Day Theme: Dreamy Light Purple / Lilac Aesthetic with High Contrast */
+  --bg-color: #f6f3fc;
+  --text-color: #1c1135;
+  --text-heading: #140827;
+  --text-body: #3c2f58;
+  --text-muted: #605180;
+  --border-subtle: rgba(147, 51, 234, 0.14);
+  --card-bg: rgba(255, 255, 255, 0.78);
+  --card-border: rgba(168, 85, 247, 0.22);
+  --liquid-highlight: rgba(255, 255, 255, 0.85);
+  --liquid-shadow: 0 16px 40px -10px rgba(124, 58, 237, 0.12), inset 0 1px 2px 0 rgba(255, 255, 255, 0.95);
+  --accent-purple: #7e22ce;
+  --accent-glow: rgba(147, 51, 234, 0.2);
+}
+
 body {
-  background-color: var(--color-background);
-  color: var(--color-foreground);
+  background-color: var(--bg-color);
+  color: var(--text-color);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   scroll-behavior: smooth;
+  transition: background-color 0.45s cubic-bezier(0.16, 1, 0.3, 1), color 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   background-image: 
-    radial-gradient(ellipse 80% 80% at 50% -20%, rgba(99, 102, 241, 0.12), rgba(255, 255, 255, 0)),
-    radial-gradient(circle at 90% 40%, rgba(139, 92, 246, 0.05), transparent 40%),
-    radial-gradient(circle at 10% 80%, rgba(56, 189, 248, 0.04), transparent 40%);
+    radial-gradient(ellipse 90% 70% at 50% -15%, rgba(168, 85, 247, 0.16), transparent 70%),
+    radial-gradient(circle at 85% 35%, rgba(139, 92, 246, 0.08), transparent 45%),
+    radial-gradient(circle at 15% 75%, rgba(192, 132, 252, 0.06), transparent 45%);
   background-attachment: fixed;
 }
 
+html.light body {
+  background-image: 
+    radial-gradient(ellipse 90% 70% at 50% -15%, rgba(192, 132, 252, 0.25), transparent 70%),
+    radial-gradient(circle at 90% 30%, rgba(216, 180, 254, 0.3), transparent 50%),
+    radial-gradient(circle at 10% 70%, rgba(233, 213, 255, 0.35), transparent 50%),
+    radial-gradient(circle at 50% 90%, rgba(168, 85, 247, 0.08), transparent 60%);
+}
+
 ::selection {
-  background-color: #6366f1;
+  background-color: #7e22ce;
   color: #ffffff;
 }
 
@@ -35,25 +70,115 @@ body {
   width: 7px;
 }
 ::-webkit-scrollbar-track {
-  background-color: #040407;
+  background-color: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: #1e1e2d;
+  background-color: #271f3d;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #6366f1;
+  background-color: #9333ea;
 }
 
-/* Glassmorphism helpers */
-.glass-panel {
-  background: rgba(15, 16, 26, 0.6);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+html.light ::-webkit-scrollbar-thumb {
+  background-color: #d8b4fe;
+  border: 1px solid rgba(147, 51, 234, 0.15);
+}
+html.light ::-webkit-scrollbar-thumb:hover {
+  background-color: #a855f7;
 }
 
-.glow-text {
-  text-shadow: 0 0 30px rgba(99, 102, 241, 0.35);
+/* ============================================================
+   LIQUID GLASS SYSTEM (Apple / VisionOS fluid specular refraction)
+   ============================================================ */
+.liquid-glass {
+  background: var(--card-bg);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--liquid-shadow);
+  position: relative;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--liquid-highlight) 30%,
+    var(--liquid-highlight) 70%,
+    transparent 100%
+  );
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.liquid-glass-pill {
+  background: var(--card-bg);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid var(--card-border);
+  box-shadow: inset 0 1px 1px 0 var(--liquid-highlight), 0 4px 16px -2px rgba(124, 58, 237, 0.08);
+  transition: all 0.25s ease;
+}
+
+.liquid-glass-pill:hover {
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow: inset 0 1px 2px 0 var(--liquid-highlight), 0 6px 20px -2px rgba(147, 51, 234, 0.18);
+}
+
+/* Day Mode Text & Contrast Adaptations */
+.theme-heading {
+  color: #ffffff;
+  transition: color 0.3s ease;
+}
+html.light .theme-heading {
+  color: #140827;
+}
+
+.theme-subheading {
+  color: #f1f5f9;
+  transition: color 0.3s ease;
+}
+html.light .theme-subheading {
+  color: #261642;
+}
+
+.theme-body {
+  color: #cbd5e1;
+  transition: color 0.3s ease;
+}
+html.light .theme-body {
+  color: #3f315c;
+}
+
+.theme-muted {
+  color: #94a3b8;
+  transition: color 0.3s ease;
+}
+html.light .theme-muted {
+  color: #655486;
+}
+
+.theme-chip {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+}
+html.light .theme-chip {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(168, 85, 247, 0.28);
+  color: #2a1b47;
+  box-shadow: 0 2px 8px -2px rgba(147, 51, 234, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.glow-purple {
+  text-shadow: 0 0 30px rgba(168, 85, 247, 0.35);
 }

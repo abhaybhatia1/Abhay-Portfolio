@@ -1,20 +1,45 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import data from '../data/portfolioData.json';
+import { useTheme } from '../context/ThemeContext';
+import { sounds } from '../utils/audio';
 
 const { skills } = data;
 
 const categoryConfig = {
-  Languages: { color: 'text-sky-400', dot: 'bg-sky-400', borderHover: 'hover:border-sky-500/40' },
-  Backend:   { color: 'text-indigo-400', dot: 'bg-indigo-400', borderHover: 'hover:border-indigo-500/40' },
-  Database:  { color: 'text-emerald-400', dot: 'bg-emerald-400', borderHover: 'hover:border-emerald-500/40' },
-  Tooling:   { color: 'text-amber-400', dot: 'bg-amber-400', borderHover: 'hover:border-amber-500/40' },
-  Concepts:  { color: 'text-violet-400', dot: 'bg-violet-400', borderHover: 'hover:border-violet-500/40' },
+  Languages: {
+    color: 'text-sky-500 dark:text-sky-400',
+    dot: 'bg-sky-500',
+    borderHover: 'hover:border-sky-400/50'
+  },
+  Backend: {
+    color: 'text-purple-600 dark:text-purple-400',
+    dot: 'bg-purple-500',
+    borderHover: 'hover:border-purple-400/50'
+  },
+  Database: {
+    color: 'text-emerald-600 dark:text-emerald-400',
+    dot: 'bg-emerald-500',
+    borderHover: 'hover:border-emerald-400/50'
+  },
+  Tooling: {
+    color: 'text-amber-600 dark:text-amber-400',
+    dot: 'bg-amber-500',
+    borderHover: 'hover:border-amber-400/50'
+  },
+  Concepts: {
+    color: 'text-fuchsia-600 dark:text-violet-400',
+    dot: 'bg-fuchsia-500',
+    borderHover: 'hover:border-fuchsia-400/50'
+  },
 };
 
 export default function Skills() {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
+
   return (
-    <section id="skills" className="py-32 px-6 md:px-12 border-t border-white/[0.06] relative">
+    <section id="skills" className="py-32 px-6 md:px-12 border-t border-inherit relative">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-20">
@@ -24,9 +49,9 @@ export default function Skills() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="text-xs font-mono tracking-[0.25em] uppercase text-indigo-400 mb-4 flex items-center gap-2"
+              className="text-xs font-mono tracking-[0.25em] uppercase text-purple-600 dark:text-purple-400 mb-4 flex items-center gap-2 font-bold"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+              <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
               02 / Skills
             </motion.p>
             <motion.h2
@@ -34,10 +59,14 @@ export default function Skills() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.08 }}
-              className="text-4xl md:text-6xl font-bold tracking-tight leading-none text-white"
+              className={`text-4xl md:text-6xl font-bold tracking-tight leading-none ${
+                isLight ? 'text-[#140827]' : 'text-white'
+              }`}
             >
               What I work<br />
-              <span className="bg-gradient-to-r from-neutral-400 to-indigo-300 bg-clip-text text-transparent">with daily.</span>
+              <span className="bg-gradient-to-r from-purple-600 via-fuchsia-600 to-indigo-600 dark:from-neutral-300 dark:to-purple-300 bg-clip-text text-transparent">
+                with daily.
+              </span>
             </motion.h2>
           </div>
           <motion.p
@@ -45,7 +74,9 @@ export default function Skills() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-neutral-400 text-sm max-w-xs leading-relaxed md:text-right"
+            className={`text-sm max-w-xs leading-relaxed md:text-right font-medium ${
+              isLight ? 'text-[#504070]' : 'text-neutral-400'
+            }`}
           >
             Technologies deployed in production environments and personal engineering projects.
           </motion.p>
@@ -54,7 +85,11 @@ export default function Skills() {
         {/* Skills Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {Object.entries(skills).map(([category, items], catIdx) => {
-            const cfg = categoryConfig[category] || { color: 'text-neutral-400', dot: 'bg-neutral-400', borderHover: 'hover:border-neutral-500/40' };
+            const cfg = categoryConfig[category] || {
+              color: 'text-purple-600 dark:text-neutral-400',
+              dot: 'bg-purple-500',
+              borderHover: 'hover:border-purple-400/50'
+            };
             return (
               <motion.div
                 key={category}
@@ -63,23 +98,33 @@ export default function Skills() {
                 viewport={{ once: true, margin: '-40px' }}
                 transition={{ duration: 0.5, delay: catIdx * 0.08 }}
                 whileHover={{ y: -4 }}
-                className={`group relative rounded-2xl border border-white/[0.07] bg-[#07080f]/70 backdrop-blur-xl p-7 transition-all duration-300 ${cfg.borderHover} hover:shadow-[0_0_30px_rgba(99,102,241,0.1)]`}
+                onMouseEnter={() => sounds.playHover()}
+                className={`group relative rounded-2xl border p-7 transition-all duration-300 liquid-glass ${
+                  isLight
+                    ? 'bg-white/80 border-purple-200/80 shadow-lg shadow-purple-950/5 hover:border-purple-400'
+                    : 'bg-[#0d091a]/70 border-white/[0.08] hover:shadow-[0_0_30px_rgba(168,85,247,0.15)]'
+                } ${cfg.borderHover}`}
               >
                 {/* Category label */}
                 <div className="flex items-center gap-2.5 mb-6">
                   <span className={`w-2 h-2 rounded-full ${cfg.dot} shadow-[0_0_8px_currentColor]`} />
-                  <span className={`text-xs tracking-wider uppercase font-mono font-semibold ${cfg.color}`}>
+                  <span className={`text-xs tracking-wider uppercase font-mono font-bold ${cfg.color}`}>
                     {category}
                   </span>
                 </div>
 
                 {/* Skill chips */}
                 <div className="flex flex-wrap gap-2.5">
-                  {items.map((skill, i) => (
+                  {items.map((skill) => (
                     <motion.span
                       key={skill}
-                      whileHover={{ scale: 1.06, borderColor: 'rgba(255,255,255,0.4)', color: '#ffffff' }}
-                      className="text-xs text-neutral-300 bg-white/[0.03] border border-white/[0.08] rounded-lg px-3.5 py-1.5 transition-colors font-medium cursor-default"
+                      whileHover={{ scale: 1.06 }}
+                      onMouseEnter={() => sounds.playHover()}
+                      className={`text-xs rounded-lg px-3.5 py-1.5 transition-all font-semibold cursor-default liquid-glass-pill ${
+                        isLight
+                          ? 'text-purple-950 bg-purple-50/90 border-purple-200/90 shadow-sm hover:border-purple-400 hover:bg-white'
+                          : 'text-neutral-200 bg-white/[0.04] border-white/[0.08] hover:border-purple-400/50 hover:text-white'
+                      }`}
                     >
                       {skill}
                     </motion.span>
@@ -98,10 +143,11 @@ export default function Skills() {
           transition={{ delay: 0.4 }}
           className="mt-12 text-center"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-indigo-500/20 bg-indigo-500/5 text-xs text-indigo-300 font-mono">
-            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
-            Currently Deep-Diving: Apache Kafka · Redis Distributed Caching · Docker
-          </span>
+          <p className={`text-xs font-mono font-semibold ${
+            isLight ? 'text-purple-900/60' : 'text-neutral-500'
+          }`}>
+            Always learning: Kafka, Docker, Kubernetes, AWS Cloud Practitioner
+          </p>
         </motion.div>
       </div>
     </section>

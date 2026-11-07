@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import ThemeToggle from './ThemeToggle';
+import { useTheme } from '../context/ThemeContext';
+import { sounds } from '../utils/audio';
+import { Volume2, VolumeX } from 'lucide-react';
 
 const GithubIcon = ({ size = 16 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -14,25 +18,48 @@ const LinkedinIcon = ({ size = 16 }) => (
 );
 
 export default function Navbar() {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
+  const [soundEnabled, setSoundEnabled] = useState(!sounds.isMuted());
+
+  const handleToggleSound = () => {
+    const nextState = sounds.toggleSound();
+    setSoundEnabled(nextState);
+  };
+
   return (
     <motion.nav
       initial={{ y: -30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed top-0 w-full z-40 flex justify-between items-center px-6 md:px-12 py-4 bg-[#040407]/75 backdrop-blur-xl border-b border-white/[0.06]"
+      className={`fixed top-0 w-full z-40 flex justify-between items-center px-6 md:px-12 py-3.5 liquid-glass border-b transition-all duration-300 ${
+        isLight
+          ? 'bg-white/80 border-purple-200/60 shadow-md shadow-purple-500/5'
+          : 'bg-[#06050b]/80 border-white/[0.07] shadow-lg shadow-black/40'
+      }`}
     >
       {/* Brand Logo */}
-      <a href="#top" className="flex items-center gap-2 group" aria-label="Abhay Bhatia Home">
-        <span className="text-lg font-black tracking-tighter text-white group-hover:text-indigo-400 transition-colors">
-          AB<span className="text-indigo-500">.</span>
+      <a
+        href="#top"
+        onClick={() => sounds.playClick()}
+        onMouseEnter={() => sounds.playHover()}
+        className="flex items-center gap-2 group cursor-pointer"
+        aria-label="Abhay Bhatia Home"
+      >
+        <span className={`text-lg font-black tracking-tighter transition-colors ${
+          isLight ? 'text-purple-950 group-hover:text-purple-700' : 'text-white group-hover:text-purple-300'
+        }`}>
+          AB<span className="text-purple-500">.</span>
         </span>
-        <span className="text-[10px] uppercase font-mono tracking-widest text-neutral-500 hidden sm:inline">
-          / Java Backend Dev
+        <span className={`text-[10px] uppercase font-mono tracking-widest hidden sm:inline ${
+          isLight ? 'text-purple-900/70' : 'text-neutral-400'
+        }`}>
+          / Backend Dev
         </span>
       </a>
 
-      {/* Nav links matching section order */}
-      <div className="hidden md:flex items-center gap-8 text-sm text-neutral-400 font-medium tracking-wide">
+      {/* Nav links */}
+      <div className="hidden md:flex items-center gap-7 text-sm font-medium tracking-wide">
         {[
           ['About', '#about'],
           ['Skills', '#skills'],
@@ -42,39 +69,92 @@ export default function Navbar() {
           <a
             key={label}
             href={href}
-            className="hover:text-white transition-colors duration-150 relative py-1 group"
+            onClick={() => sounds.playClick()}
+            onMouseEnter={() => sounds.playHover()}
+            className={`transition-colors duration-150 relative py-1 group font-semibold ${
+              isLight
+                ? 'text-purple-950/80 hover:text-purple-700'
+                : 'text-neutral-300 hover:text-white'
+            }`}
           >
             {label}
-            <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-indigo-500 to-sky-400 group-hover:w-full transition-all duration-300 rounded-full" />
+            <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-purple-500 to-indigo-500 group-hover:w-full transition-all duration-300 rounded-full" />
           </a>
         ))}
       </div>
 
-      {/* Right CTAs */}
+      {/* Right Controls */}
       <div className="flex items-center gap-2">
+        {/* Sound Effects Toggle */}
+        <motion.button
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.92 }}
+          onClick={handleToggleSound}
+          onMouseEnter={() => sounds.playHover()}
+          aria-label={soundEnabled ? 'Mute Sound Effects' : 'Enable Sound Effects'}
+          title={soundEnabled ? 'Sound Effects: ON (Click to Mute)' : 'Sound Effects: OFF (Click to Enable)'}
+          className={`p-2.5 rounded-full border transition-all duration-200 cursor-pointer flex items-center justify-center liquid-glass ${
+            soundEnabled
+              ? isLight
+                ? 'bg-purple-100/90 border-purple-300 text-purple-700 shadow-sm'
+                : 'bg-white/[0.05] border-purple-400/40 text-purple-300 shadow-[0_0_15px_rgba(168,85,247,0.25)]'
+              : isLight
+              ? 'bg-purple-50/50 border-purple-200/50 text-purple-400'
+              : 'bg-white/[0.02] border-white/10 text-neutral-500'
+          }`}
+        >
+          {soundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
+        </motion.button>
+
+        {/* Dark / Light Mode Sun/Moon Toggle */}
+        <ThemeToggle />
+
+        {/* GitHub Link */}
         <a
           href="https://github.com/abhaybhatia1"
           target="_blank"
           rel="noopener noreferrer"
-          className="p-2 text-neutral-400 hover:text-white hover:bg-white/5 rounded-full transition-all"
+          onClick={() => sounds.playClick()}
+          onMouseEnter={() => sounds.playHover()}
+          className={`p-2.5 rounded-full border transition-all duration-200 flex items-center justify-center cursor-pointer liquid-glass ${
+            isLight
+              ? 'border-purple-200/80 text-purple-900 hover:text-purple-600 hover:bg-purple-100/80'
+              : 'border-white/10 text-neutral-300 hover:text-white hover:bg-white/5'
+          }`}
           title="GitHub Profile"
           aria-label="GitHub Profile"
         >
-          <GithubIcon size={16} />
+          <GithubIcon size={15} />
         </a>
+
+        {/* LinkedIn Link */}
         <a
           href="https://in.linkedin.com/in/abhay-bhatia-202935229"
           target="_blank"
           rel="noopener noreferrer"
-          className="p-2 text-neutral-400 hover:text-indigo-300 hover:bg-white/5 rounded-full transition-all"
+          onClick={() => sounds.playClick()}
+          onMouseEnter={() => sounds.playHover()}
+          className={`p-2.5 rounded-full border transition-all duration-200 flex items-center justify-center cursor-pointer liquid-glass ${
+            isLight
+              ? 'border-purple-200/80 text-purple-900 hover:text-purple-600 hover:bg-purple-100/80'
+              : 'border-white/10 text-neutral-300 hover:text-purple-300 hover:bg-white/5'
+          }`}
           title="LinkedIn Profile"
           aria-label="LinkedIn Profile"
         >
-          <LinkedinIcon size={16} />
+          <LinkedinIcon size={15} />
         </a>
+
+        {/* Hire Me CTA */}
         <a
           href="#contact"
-          className="text-xs font-semibold px-4 py-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-200 hover:bg-indigo-500 hover:text-white hover:shadow-[0_0_20px_rgba(99,102,241,0.4)] transition-all ml-1"
+          onClick={() => sounds.playClick()}
+          onMouseEnter={() => sounds.playHover()}
+          className={`text-xs font-semibold px-4 py-2.5 rounded-full border transition-all duration-200 ml-1 cursor-pointer ${
+            isLight
+              ? 'bg-purple-600 text-white border-purple-500 hover:bg-purple-700 shadow-sm shadow-purple-400/40'
+              : 'border-purple-500/40 bg-purple-500/10 text-purple-300 hover:bg-purple-500 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]'
+          }`}
         >
           Hire Me
         </a>

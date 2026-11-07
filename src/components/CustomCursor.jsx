@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useSpring } from 'framer-motion';
+import { useTheme } from '../context/ThemeContext';
 
 export default function CustomCursor() {
   const [pos, setPos] = useState({ x: -100, y: -100 });
@@ -7,6 +8,8 @@ export default function CustomCursor() {
   const [isClicking, setIsClicking] = useState(false);
   const [active, setActive] = useState(false);
   const isMountedRef = useRef(false);
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
 
   const springCfg = { stiffness: 450, damping: 28 };
   const smoothX = useSpring(-100, springCfg);
@@ -62,28 +65,44 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* Outer Spring Follower Ring with Indigo Glow */}
+      {/* Outer Spring Follower Ring with Purple Glow */}
       <motion.div
-        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9998] border border-indigo-400/50"
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9998] border"
         style={{
           x: smoothX,
           y: smoothY,
-          boxShadow: isHovering ? '0 0 25px rgba(99, 102, 241, 0.45)' : 'none',
+          boxShadow: isHovering
+            ? isLight
+              ? '0 0 25px rgba(147, 51, 234, 0.4)'
+              : '0 0 25px rgba(168, 85, 247, 0.45)'
+            : 'none',
         }}
         animate={{
           width: isHovering ? 52 : isClicking ? 22 : 34,
           height: isHovering ? 52 : isClicking ? 22 : 34,
           marginLeft: isHovering ? -26 : isClicking ? -11 : -17,
           marginTop: isHovering ? -26 : isClicking ? -11 : -17,
-          borderColor: isHovering ? 'rgba(129, 140, 248, 0.9)' : 'rgba(99, 102, 241, 0.45)',
-          backgroundColor: isHovering ? 'rgba(99, 102, 241, 0.08)' : 'transparent',
+          borderColor: isHovering
+            ? isLight
+              ? 'rgba(126, 34, 206, 0.9)'
+              : 'rgba(192, 132, 252, 0.9)'
+            : isLight
+            ? 'rgba(147, 51, 234, 0.4)'
+            : 'rgba(168, 85, 247, 0.4)',
+          backgroundColor: isHovering
+            ? isLight
+              ? 'rgba(147, 51, 234, 0.1)'
+              : 'rgba(168, 85, 247, 0.08)'
+            : 'transparent',
         }}
         transition={{ type: 'spring', stiffness: 350, damping: 25 }}
       />
 
       {/* Center Precise Dot */}
       <div
-        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999] bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+        className={`fixed top-0 left-0 rounded-full pointer-events-none z-[9999] shadow-sm ${
+          isLight ? 'bg-purple-700 shadow-purple-500/50' : 'bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]'
+        }`}
         style={{
           transform: `translate(${pos.x - 3}px, ${pos.y - 3}px)`,
           width: 6,
