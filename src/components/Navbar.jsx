@@ -13,25 +13,25 @@ export default function Navbar() {
       initial={{ y: -30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed top-0 w-full z-40 flex justify-between items-center px-6 md:px-12 py-4 bg-[#040407]/70 backdrop-blur-xl border-b border-white/[0.06]"
+      className="fixed top-0 w-full z-40 flex justify-between items-center px-6 md:px-12 py-4 bg-[#040407]/75 backdrop-blur-xl border-b border-white/[0.06]"
     >
       {/* Brand Logo */}
-      <a href="#top" className="flex items-center gap-2 group">
+      <a href="#top" className="flex items-center gap-2 group" aria-label="Abhay Bhatia Home">
         <span className="text-lg font-black tracking-tighter text-white group-hover:text-indigo-400 transition-colors">
           AB<span className="text-indigo-500">.</span>
         </span>
         <span className="text-[10px] uppercase font-mono tracking-widest text-neutral-500 hidden sm:inline">
-          / Portfolio
+          / Java Backend Dev
         </span>
       </a>
 
-      {/* Nav links */}
+      {/* Nav links matching section order */}
       <div className="hidden md:flex items-center gap-8 text-sm text-neutral-400 font-medium tracking-wide">
         {[
           ['About', '#about'],
           ['Skills', '#skills'],
-          ['Experience', '#experience'],
           ['Projects', '#projects'],
+          ['Experience', '#experience'],
         ].map(([label, href]) => (
           <a
             key={label}
@@ -49,9 +49,10 @@ export default function Navbar() {
         <a
           href="https://github.com/abhaybhatia1"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           className="p-2 text-neutral-400 hover:text-white hover:bg-white/5 rounded-full transition-all"
-          title="GitHub"
+          title="GitHub Profile"
+          aria-label="GitHub Profile"
         >
           <GithubIcon size={16} />
         </a>
