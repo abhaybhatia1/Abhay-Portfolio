@@ -7,7 +7,7 @@ export default function PageLoader({ onComplete }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setVisible(false);
-      setTimeout(onComplete, 600);
+      if (onComplete) onComplete();
     }, 1300);
 
     return () => clearTimeout(timer);
@@ -20,7 +20,7 @@ export default function PageLoader({ onComplete }) {
       {visible && (
         <motion.div
           key="loader"
-          className="fixed inset-0 z-[9999] bg-[#040407] flex flex-col items-center justify-center overflow-hidden"
+          className="fixed inset-0 z-[9999] bg-[#040407] flex flex-col items-center justify-center overflow-hidden pointer-events-none"
           exit={{
             y: '-100%',
             transition: { duration: 0.7, ease: [0.76, 0, 0.24, 1] }
@@ -44,7 +44,7 @@ export default function PageLoader({ onComplete }) {
           </div>
 
           {/* Logo letters staggered */}
-          <div className="flex overflow-hidden relative z-10 mb-4">
+          <div className="flex overflow-hidden relative z-10 mb-4" aria-hidden="true">
             {letters.map((char, i) => (
               <motion.span
                 key={i}

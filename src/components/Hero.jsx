@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import { ArrowDown, Mail } from 'lucide-react';
+import { ArrowDown, Mail, ArrowUpRight } from 'lucide-react';
 
 const GithubIcon = ({ size = 16 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -10,10 +10,9 @@ const GithubIcon = ({ size = 16 }) => (
 
 const tags = ['Java', 'Spring Boot', 'MySQL', 'React', 'REST APIs', 'Spring Security'];
 
-// SplitText with individual letter spring animation
 function SplitText({ text, className, delay = 0 }) {
   return (
-    <span className={className} style={{ display: 'inline-flex', overflow: 'hidden' }}>
+    <span className={className} style={{ display: 'inline-flex', overflow: 'hidden' }} aria-hidden="true">
       {text.split('').map((char, i) => (
         <motion.span
           key={i}
@@ -33,8 +32,7 @@ function SplitText({ text, className, delay = 0 }) {
   );
 }
 
-// Magnetic Button with smooth cursor pull
-function MagneticButton({ children, className, href, target, rel }) {
+function MagneticButton({ children, className, href, target, rel, onClick }) {
   const ref = useRef(null);
   const x = useSpring(0, { stiffness: 220, damping: 18 });
   const y = useSpring(0, { stiffness: 220, damping: 18 });
@@ -55,6 +53,7 @@ function MagneticButton({ children, className, href, target, rel }) {
       href={href}
       target={target}
       rel={rel}
+      onClick={onClick}
       style={{ x, y }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -69,7 +68,6 @@ export default function Hero() {
   const sectionRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] });
 
-  // Floating parallax ambient orbs
   const orb1Y = useTransform(scrollYProgress, [0, 1], ['0%', '35%']);
   const orb2Y = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
@@ -115,9 +113,12 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        {/* Hero Name with SplitText Animation */}
+        {/* Hero Name with Screen-Reader Accessible SplitText */}
         <div className="mb-6">
-          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight leading-[1.02]">
+          <h1
+            className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight leading-[1.02]"
+            aria-label="Abhay Bhatia"
+          >
             <span className="text-white drop-shadow-[0_0_35px_rgba(255,255,255,0.15)] block">
               <SplitText text="ABHAY" delay={0.25} />
             </span>
@@ -179,11 +180,19 @@ export default function Hero() {
           <MagneticButton
             href="https://github.com/abhaybhatia1"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/15 bg-white/[0.03] backdrop-blur-sm text-sm font-medium text-neutral-200 rounded-full hover:border-indigo-400 hover:text-white hover:shadow-[0_0_20px_rgba(99,102,241,0.2)] transition-all cursor-pointer"
           >
             <GithubIcon size={15} />
             GitHub Profile
+          </MagneticButton>
+
+          <MagneticButton
+            href="#projects"
+            className="inline-flex items-center gap-1.5 px-6 py-3.5 text-sm font-mono text-neutral-400 hover:text-white transition-colors cursor-pointer"
+          >
+            <span>Explore Work</span>
+            <ArrowUpRight size={14} className="text-neutral-500" />
           </MagneticButton>
         </motion.div>
       </motion.div>

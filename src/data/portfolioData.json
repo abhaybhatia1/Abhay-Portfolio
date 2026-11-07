@@ -8,11 +8,11 @@
       "url": "https://github.com/abhaybhatia1/Employee-Management-System"
     },
     {
-      "name": "Blog Management API",
-      "stack": ["Java", "Spring Boot", "MySQL", "Spring Security", "JWT"],
-      "description": "A production-ready REST API for content platforms, supporting full post lifecycle with pagination, search, and category filtering. JWT-based auth secures every endpoint — only token holders can create or modify content. Query optimization and strategic indexing cut average response time by 40%.",
-      "impact": ["JWT secured endpoints", "40% faster responses", "Pagination & search built-in"],
-      "url": "https://github.com/abhaybhatia1/Blog-Management-API"
+      "name": "Banking & Accounts System",
+      "stack": ["Java", "Spring Boot", "MySQL", "Spring Data JPA", "REST APIs"],
+      "description": "A secure banking backend service handling core financial operations — account creation, balance inquiries, fund deposits, and withdrawals. Built with strict transaction atomicity, relational integrity, and structured REST endpoints for error handling and account audit logs.",
+      "impact": ["Atomic financial transactions", "RESTful ledger endpoints", "Clean domain architecture"],
+      "url": "https://github.com/abhaybhatia1/Banking_SpringBoot"
     }
   ],
   "skills": {
@@ -66,4 +66,3 @@
     "summary": "Java backend developer with 1.5+ years shipping real products. Currently modernizing a legacy enterprise system at Damco Solutions. Strong in Spring Boot, MySQL, and REST API design. Interested in product-focused teams where backend quality directly shapes user experience."
   }
 }
-

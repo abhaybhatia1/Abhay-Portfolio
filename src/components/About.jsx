@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 
-// Animated counter hook with easeOutExpo
+// Animated counter hook with proper requestAnimationFrame cleanup
 function useCounter(target, duration = 1.6) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
@@ -9,7 +9,8 @@ function useCounter(target, duration = 1.6) {
 
   useEffect(() => {
     if (!inView) return;
-    let start = 0;
+    let frameId;
+    const start = 0;
     const end = parseFloat(target);
     const range = end - start;
     const startTime = performance.now();
@@ -19,9 +20,15 @@ function useCounter(target, duration = 1.6) {
       const progress = Math.min(elapsed / duration, 1);
       const eased = 1 - Math.pow(2, -10 * progress);
       setCount(start + range * eased);
-      if (progress < 1) requestAnimationFrame(tick);
+      if (progress < 1) {
+        frameId = requestAnimationFrame(tick);
+      }
     };
-    requestAnimationFrame(tick);
+    frameId = requestAnimationFrame(tick);
+
+    return () => {
+      if (frameId) cancelAnimationFrame(frameId);
+    };
   }, [inView, target, duration]);
 
   return { count, ref };
@@ -61,17 +68,20 @@ function AnimatedHeadline({ text, className }) {
   return (
     <span className={className}>
       {words.map((word, i) => (
-        <span key={i} style={{ display: 'inline-block', overflow: 'hidden', marginRight: '0.3em' }}>
-          <motion.span
-            style={{ display: 'inline-block' }}
-            initial={{ y: '110%' }}
-            whileInView={{ y: '0%' }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.7, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {word}
-          </motion.span>
-        </span>
+        <React.Fragment key={i}>
+          <span style={{ display: 'inline-block', overflow: 'hidden' }}>
+            <motion.span
+              style={{ display: 'inline-block' }}
+              initial={{ y: '110%' }}
+              whileInView={{ y: '0%' }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.7, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {word}
+            </motion.span>
+          </span>
+          {i < words.length - 1 && ' '}
+        </React.Fragment>
       ))}
     </span>
   );
