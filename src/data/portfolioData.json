@@ -2,41 +2,44 @@
   "projects": [
     {
       "name": "Employee Management System",
-      "stack": ["Java", "Spring Boot", "React.js", "MySQL"],
-      "description": "Developed a full-stack system managing 100+ employees, automating HR processes. Built RESTful APIs for CRUD operations, reducing manual work by 60%. Optimized database queries using Spring Data JPA, improving efficiency by 35%.",
+      "stack": ["Java", "Spring Boot", "React.js", "MySQL", "Spring Data JPA"],
+      "description": "A full-stack HR platform built to replace manual spreadsheet workflows. The Spring Boot backend exposes a clean REST API for employee lifecycle management — onboarding, role assignment, attendance — consumed by a React frontend. Pagination, sorting, and indexed queries keep response times fast as the dataset grows.",
+      "impact": ["60% less manual HR work", "35% faster DB queries", "Role-based access control"],
       "url": "https://github.com/abhaybhatia1/Employee-Management-System"
     },
     {
       "name": "Blog Management API",
-      "stack": ["Java", "Spring Boot", "MySQL", "Spring Security"],
-      "description": "Created APIs supporting 1,000+ blog posts with pagination and caching. Secured endpoints using Spring Security, reducing unauthorized access by 80%. Improved response speed by 40% through query optimization.",
-      "url": "https://github.com/abhaybhatia1/todo_SpringBoot_MySQL"
+      "stack": ["Java", "Spring Boot", "MySQL", "Spring Security", "JWT"],
+      "description": "A production-ready REST API for content platforms, supporting full post lifecycle with pagination, search, and category filtering. JWT-based auth secures every endpoint — only token holders can create or modify content. Query optimization and strategic indexing cut average response time by 40%.",
+      "impact": ["JWT secured endpoints", "40% faster responses", "Pagination & search built-in"],
+      "url": "https://github.com/abhaybhatia1/Blog-Management-API"
     }
   ],
   "skills": {
     "Languages": ["Java", "SQL", "JavaScript"],
-    "Backend": ["Spring Boot", "Spring Data JPA", "Hibernate", "REST API", "Spring Security"],
+    "Backend": ["Spring Boot", "Spring Data JPA", "Hibernate", "Spring Security", "REST APIs"],
     "Database": ["MySQL"],
-    "Concepts": ["OOP", "Data Structures & Algorithms", "Authentication & Authorization"]
+    "Tooling": ["Git", "GitHub Actions", "Postman", "IntelliJ IDEA"],
+    "Concepts": ["OOP", "Data Structures & Algorithms", "System Design", "Clean Code"]
   },
   "experience": [
     {
       "date": "Jun 2025 – Present",
       "title": "Software Developer",
       "company": "Damco Solutions, Gurgaon",
-      "text": "Modernizing an enterprise web application from MVC to Angular; developing REST APIs and CRUD workflows with Java, Spring Boot, and MySQL."
+      "text": "Engineered migration of a legacy MVC enterprise application to Angular + Spring Boot, reducing page load latency by ~35%. Designed and deployed secure RESTful APIs for high-throughput CRUD operations backed by optimized MySQL queries. Collaborated with cross-functional teams to spec, build, and ship production-ready modules on a 2-week release cycle."
     },
     {
       "date": "Dec 2024 – Jun 2025",
       "title": "Associate Analyst",
       "company": "GlobalLogic, Gurgaon",
-      "text": "Cleaned large datasets, built Power BI dashboards, and partnered with engineering teams to deliver accurate data insights."
+      "text": "Partnered with engineering teams to identify and resolve data integrity issues blocking 3 product sprints. Built Power BI dashboards translating raw datasets into actionable metrics for senior stakeholders. Bridged the gap between data pipelines and product requirements, reducing reporting turnaround time by 30%."
     },
     {
-      "date": "Feb 2024 – July 2024",
+      "date": "Feb 2024 – Jul 2024",
       "title": "Engineering Intern",
       "company": "FarEye Logistics, Noida",
-      "text": "Developed backend APIs for order and vehicle data validation, reducing errors by 50%. Integrated CSV/Excel file upload, improving data handling efficiency by 40%. Built role-based authentication using Spring Security."
+      "text": "Developed backend APIs for order and vehicle data validation, cutting input errors by ~50% through strict schema enforcement. Integrated CSV/Excel bulk-upload pipeline, eliminating manual data entry for operations teams. Built role-based access control using Spring Security to enforce fine-grained endpoint authorization."
     }
   ],
   "education": [
@@ -60,6 +63,7 @@
     }
   ],
   "about": {
-    "summary": "Full-Stack Developer skilled in Java, Spring Boot, React.js, and MySQL. Proven experience in backend development, API optimization, and secure authentication. Passionate about building efficient, scalable, and maintainable software solutions."
+    "summary": "Java backend developer with 1.5+ years shipping real products. Currently modernizing a legacy enterprise system at Damco Solutions. Strong in Spring Boot, MySQL, and REST API design. Interested in product-focused teams where backend quality directly shapes user experience."
   }
 }
+
