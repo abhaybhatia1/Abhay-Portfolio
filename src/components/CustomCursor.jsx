@@ -1,73 +1,90 @@
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useSpring } from 'framer-motion';
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [pos, setPos] = useState({ x: -100, y: -100 });
   const [isHovering, setIsHovering] = useState(false);
+  const [isClicking, setIsClicking] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const springCfg = { stiffness: 450, damping: 28 };
+  const smoothX = useSpring(-100, springCfg);
+  const smoothY = useSpring(-100, springCfg);
 
   useEffect(() => {
-    const updateMousePosition = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+    if (typeof window === 'undefined' || window.innerWidth < 768) return;
+
+    const onMove = (e) => {
+      setPos({ x: e.clientX, y: e.clientY });
+      smoothX.set(e.clientX);
+      smoothY.set(e.clientY);
+      if (!isVisible) setIsVisible(true);
     };
 
-    const handleMouseOver = (e) => {
-      if (
-        e.target.tagName === 'A' ||
-        e.target.tagName === 'BUTTON' ||
-        e.target.closest('a') ||
-        e.target.closest('button') ||
-        e.target.classList.contains('hover-target')
-      ) {
-        setIsHovering(true);
-      } else {
-        setIsHovering(false);
-      }
+    const onOver = (e) => {
+      const target = e.target;
+      setIsHovering(
+        target.tagName === 'A' ||
+        target.tagName === 'BUTTON' ||
+        !!target.closest('a') ||
+        !!target.closest('button') ||
+        target.classList.contains('hover-target')
+      );
     };
 
-    window.addEventListener('mousemove', updateMousePosition);
-    window.addEventListener('mouseover', handleMouseOver);
+    const onDown = () => setIsClicking(true);
+    const onUp = () => setIsClicking(false);
+    const onLeave = () => setIsVisible(false);
+
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseover', onOver);
+    window.addEventListener('mousedown', onDown);
+    window.addEventListener('mouseup', onUp);
+    document.addEventListener('mouseleave', onLeave);
 
     return () => {
-      window.removeEventListener('mousemove', updateMousePosition);
-      window.removeEventListener('mouseover', handleMouseOver);
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseover', onOver);
+      window.removeEventListener('mousedown', onDown);
+      window.removeEventListener('mouseup', onUp);
+      document.removeEventListener('mouseleave', onLeave);
     };
-  }, []);
+  }, [isVisible]);
 
-  // Hide cursor on mobile
-  if (typeof window !== 'undefined' && window.innerWidth < 768) {
-    return null;
-  }
-
-  const variants = {
-    default: {
-      x: mousePosition.x - 8,
-      y: mousePosition.y - 8,
-      height: 16,
-      width: 16,
-      backgroundColor: 'rgba(255, 255, 255, 1)',
-      mixBlendMode: 'difference',
-    },
-    hover: {
-      x: mousePosition.x - 32,
-      y: mousePosition.y - 32,
-      height: 64,
-      width: 64,
-      backgroundColor: 'rgba(255, 255, 255, 1)',
-      mixBlendMode: 'difference',
-    }
-  };
+  if (typeof window !== 'undefined' && window.innerWidth < 768) return null;
+  if (!isVisible) return null;
 
   return (
-    <motion.div
-      className="fixed top-0 left-0 rounded-full pointer-events-none z-50"
-      variants={variants}
-      animate={isHovering ? 'hover' : 'default'}
-      transition={{
-        type: 'spring',
-        stiffness: 500,
-        damping: 28,
-        mass: 0.5
-      }}
-    />
+    <>
+      {/* Outer Spring Follower Ring with Indigo Glow */}
+      <motion.div
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9998] border border-indigo-400/50"
+        style={{
+          x: smoothX,
+          y: smoothY,
+          boxShadow: isHovering ? '0 0 25px rgba(99, 102, 241, 0.4)' : 'none',
+        }}
+        animate={{
+          width: isHovering ? 52 : isClicking ? 22 : 34,
+          height: isHovering ? 52 : isClicking ? 22 : 34,
+          marginLeft: isHovering ? -26 : isClicking ? -11 : -17,
+          marginTop: isHovering ? -26 : isClicking ? -11 : -17,
+          borderColor: isHovering ? 'rgba(129, 140, 248, 0.9)' : 'rgba(99, 102, 241, 0.45)',
+          backgroundColor: isHovering ? 'rgba(99, 102, 241, 0.08)' : 'transparent',
+        }}
+        transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+      />
+
+      {/* Center Precise Dot */}
+      <div
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999] bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+        style={{
+          transform: `translate(${pos.x - 3}px, ${pos.y - 3}px)`,
+          width: 6,
+          height: 6,
+          transition: 'transform 0.04s ease-out',
+        }}
+      />
+    </>
   );
 }
