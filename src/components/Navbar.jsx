@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail } from 'lucide-react';
 
 const GithubIcon = ({ size = 16 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -11,26 +10,36 @@ const GithubIcon = ({ size = 16 }) => (
 export default function Navbar() {
   return (
     <motion.nav
-      initial={{ y: -20, opacity: 0 }}
+      initial={{ y: -30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
-      className="fixed top-0 w-full z-40 flex justify-between items-center px-6 md:px-12 py-5 bg-background/80 backdrop-blur-md border-b border-neutral-900/50"
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className="fixed top-0 w-full z-40 flex justify-between items-center px-6 md:px-12 py-4 bg-[#040407]/70 backdrop-blur-xl border-b border-white/[0.06]"
     >
-      {/* Logo */}
-      <a href="#top" className="text-lg font-bold tracking-tighter z-50 hover:text-neutral-300 transition-colors">
-        AB<span className="text-neutral-600">.</span>
+      {/* Brand Logo */}
+      <a href="#top" className="flex items-center gap-2 group">
+        <span className="text-lg font-black tracking-tighter text-white group-hover:text-indigo-400 transition-colors">
+          AB<span className="text-indigo-500">.</span>
+        </span>
+        <span className="text-[10px] uppercase font-mono tracking-widest text-neutral-500 hidden sm:inline">
+          / Portfolio
+        </span>
       </a>
 
       {/* Nav links */}
-      <div className="hidden md:flex gap-8 text-sm text-neutral-400 font-medium tracking-wide">
-        {[['About', '#about'], ['Skills', '#skills'], ['Experience', '#experience'], ['Work', '#projects']].map(([label, href]) => (
+      <div className="hidden md:flex items-center gap-8 text-sm text-neutral-400 font-medium tracking-wide">
+        {[
+          ['About', '#about'],
+          ['Skills', '#skills'],
+          ['Experience', '#experience'],
+          ['Projects', '#projects'],
+        ].map(([label, href]) => (
           <a
             key={label}
             href={href}
-            className="hover:text-white transition-colors duration-150 relative group"
+            className="hover:text-white transition-colors duration-150 relative py-1 group"
           >
             {label}
-            <span className="absolute -bottom-0.5 left-0 w-0 h-[1px] bg-white group-hover:w-full transition-all duration-200" />
+            <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-indigo-500 to-sky-400 group-hover:w-full transition-all duration-300 rounded-full" />
           </a>
         ))}
       </div>
@@ -41,13 +50,14 @@ export default function Navbar() {
           href="https://github.com/abhaybhatia1"
           target="_blank"
           rel="noreferrer"
-          className="hidden md:flex items-center gap-1.5 text-xs text-neutral-500 hover:text-white transition-colors duration-150"
+          className="p-2 text-neutral-400 hover:text-white hover:bg-white/5 rounded-full transition-all"
+          title="GitHub"
         >
-          <GithubIcon size={14} />
+          <GithubIcon size={16} />
         </a>
         <a
           href="#contact"
-          className="text-xs font-semibold border border-neutral-700 px-4 py-2 rounded-full hover:bg-white hover:text-black hover:border-white transition-all duration-200"
+          className="text-xs font-semibold px-4 py-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-200 hover:bg-indigo-500 hover:text-white hover:shadow-[0_0_20px_rgba(99,102,241,0.4)] transition-all"
         >
           Hire Me
         </a>

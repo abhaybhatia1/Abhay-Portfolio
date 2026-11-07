@@ -30,7 +30,7 @@ const links = [
   },
   {
     label: 'LinkedIn',
-    sub: 'Connect with me',
+    sub: 'linkedin.com/in/abhaybhatia',
     href: 'https://linkedin.com/in/abhaybhatia',
     icon: LinkedinIcon,
     external: true,
@@ -39,18 +39,20 @@ const links = [
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-40 px-6 md:px-12 relative overflow-hidden bg-background border-t border-neutral-900">
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50vw] h-[50vw] bg-white/[0.03] rounded-full blur-[150px] pointer-events-none" />
+    <section id="contact" className="py-36 px-6 md:px-12 relative overflow-hidden border-t border-white/[0.06]">
+      {/* Background glow orb */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-indigo-600/10 rounded-full blur-[160px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
-
         {/* Section label */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.5 }}
-          className="text-sm tracking-widest uppercase text-neutral-500 mb-12"
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-xs font-mono tracking-[0.25em] uppercase text-indigo-400 mb-12 flex items-center gap-2"
         >
+          <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
           05 / Contact
         </motion.p>
 
@@ -58,28 +60,30 @@ export default function Contact() {
         <div className="mb-20">
           <div className="overflow-hidden mb-2">
             <motion.h2
-              initial={{ y: 120 }} whileInView={{ y: 0 }}
+              initial={{ y: 100 }}
+              whileInView={{ y: 0 }}
               viewport={{ once: true }}
-              transition={{ type: 'spring', stiffness: 80, damping: 20 }}
-              className="text-6xl md:text-8xl lg:text-[9rem] font-bold tracking-tighter leading-none"
+              transition={{ type: 'spring', stiffness: 90, damping: 20 }}
+              className="text-6xl md:text-8xl lg:text-[8.5rem] font-black tracking-tight leading-none text-white"
             >
               LET'S
             </motion.h2>
           </div>
           <div className="overflow-hidden">
             <motion.h2
-              initial={{ y: 120 }} whileInView={{ y: 0 }}
+              initial={{ y: 100 }}
+              whileInView={{ y: 0 }}
               viewport={{ once: true }}
-              transition={{ type: 'spring', stiffness: 80, damping: 20, delay: 0.08 }}
-              className="text-6xl md:text-8xl lg:text-[9rem] font-bold tracking-tighter leading-none text-neutral-600"
+              transition={{ type: 'spring', stiffness: 90, damping: 20, delay: 0.08 }}
+              className="text-6xl md:text-8xl lg:text-[8.5rem] font-black tracking-tight leading-none bg-gradient-to-r from-neutral-300 via-indigo-300 to-indigo-500 bg-clip-text text-transparent"
             >
               CONNECT.
             </motion.h2>
           </div>
         </div>
 
-        {/* Contact link cards */}
-        <div className="flex flex-col divide-y divide-neutral-900">
+        {/* Contact links list */}
+        <div className="flex flex-col divide-y divide-white/[0.07]">
           {links.map((link, i) => {
             const Icon = link.icon;
             return (
@@ -92,37 +96,40 @@ export default function Contact() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                whileHover={{ x: 8 }}
-                className="group flex items-center justify-between py-8 hover:text-white text-neutral-400 transition-colors duration-200"
+                whileHover={{ x: 10 }}
+                className="group flex items-center justify-between py-8 text-neutral-300 hover:text-white transition-all duration-200"
               >
                 <div className="flex items-center gap-6">
-                  <div className="w-10 h-10 rounded-full border border-neutral-800 flex items-center justify-center group-hover:border-neutral-500 transition-colors duration-200">
-                    <Icon size={16} />
+                  <div className="w-12 h-12 rounded-2xl border border-white/10 bg-white/[0.03] flex items-center justify-center group-hover:border-indigo-400 group-hover:bg-indigo-500/10 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.3)] transition-all duration-200">
+                    <Icon size={18} className="text-neutral-300 group-hover:text-indigo-300 transition-colors" />
                   </div>
                   <div>
-                    <p className="text-xl md:text-2xl font-semibold text-white">{link.label}</p>
-                    <p className="text-sm text-neutral-600 mt-0.5">{link.sub}</p>
+                    <p className="text-xl md:text-2xl font-bold text-white group-hover:text-indigo-200 transition-colors">
+                      {link.label}
+                    </p>
+                    <p className="text-sm font-mono text-neutral-400 mt-0.5">{link.sub}</p>
                   </div>
                 </div>
                 <ArrowUpRight
-                  size={20}
-                  className="text-neutral-700 group-hover:text-white group-hover:-translate-y-1 group-hover:translate-x-1 transition-all duration-200"
+                  size={22}
+                  className="text-neutral-500 group-hover:text-indigo-400 group-hover:-translate-y-1 group-hover:translate-x-1 transition-all duration-200"
                 />
               </motion.a>
             );
           })}
         </div>
 
-        {/* Availability badge */}
+        {/* Availability status badge */}
         <motion.div
-          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-          viewport={{ once: true }} transition={{ delay: 0.5 }}
-          className="mt-16 inline-flex items-center gap-2 text-xs text-neutral-500 border border-neutral-800 rounded-full px-4 py-2"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+          className="mt-16 inline-flex items-center gap-2.5 text-xs text-neutral-300 border border-emerald-500/30 bg-emerald-500/5 rounded-full px-4 py-2 font-mono"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-          Currently open to backend / full-stack engineering roles
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
+          Currently open to backend & full-stack software engineering roles
         </motion.div>
-
       </div>
     </section>
   );

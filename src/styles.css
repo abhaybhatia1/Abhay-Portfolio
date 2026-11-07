@@ -1,13 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-background: #0a0a0a;
-  --color-foreground: #ededed;
+  --color-background: #040407;
+  --color-foreground: #f3f4f6;
   --color-primary: #ffffff;
-  --color-muted: #a3a3a3;
-  --color-accent: #1e1e1e;
-  --font-sans: "Inter", sans-serif;
+  --color-muted: #94a3b8;
+  --color-accent: #0f1017;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
 }
 
 body {
@@ -16,24 +17,43 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  scroll-behavior: smooth;
+  background-image: 
+    radial-gradient(ellipse 80% 80% at 50% -20%, rgba(99, 102, 241, 0.12), rgba(255, 255, 255, 0)),
+    radial-gradient(circle at 90% 40%, rgba(139, 92, 246, 0.05), transparent 40%),
+    radial-gradient(circle at 10% 80%, rgba(56, 189, 248, 0.04), transparent 40%);
+  background-attachment: fixed;
 }
 
 ::selection {
-  background-color: #fff;
-  color: #000;
+  background-color: #6366f1;
+  color: #ffffff;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 7px;
 }
 ::-webkit-scrollbar-track {
-  background-color: var(--color-background);
+  background-color: #040407;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: var(--color-accent);
+  background-color: #1e1e2d;
   border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #404040;
+  background-color: #6366f1;
+}
+
+/* Glassmorphism helpers */
+.glass-panel {
+  background: rgba(15, 16, 26, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.glow-text {
+  text-shadow: 0 0 30px rgba(99, 102, 241, 0.35);
 }
