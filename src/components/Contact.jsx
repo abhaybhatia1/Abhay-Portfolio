@@ -30,8 +30,8 @@ const links = [
   },
   {
     label: 'LinkedIn',
-    sub: 'linkedin.com/in/abhaybhatia',
-    href: 'https://linkedin.com/in/abhaybhatia',
+    sub: 'linkedin.com/in/abhay-bhatia-202935229',
+    href: 'https://in.linkedin.com/in/abhay-bhatia-202935229',
     icon: LinkedinIcon,
     external: true,
   },
@@ -91,7 +91,7 @@ export default function Contact() {
                 key={link.label}
                 href={link.href}
                 target={link.external ? '_blank' : undefined}
-                rel={link.external ? 'noreferrer' : undefined}
+                rel={link.external ? 'noopener noreferrer' : undefined}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
